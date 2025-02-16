@@ -48,7 +48,7 @@ namespace WpfEllipsen
             Random rnd = new Random();
             const int MaxEllipsen = 25;
             
-            const int Min = 20;
+            const int Min = 20; 
             const int Max = 100;
 
             const int MinPosX = 0;
