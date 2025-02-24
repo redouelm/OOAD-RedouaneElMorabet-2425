@@ -1,0 +1,17 @@
+﻿<Window x:Class="WpfMatchFiles.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMatchFiles"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="BtnChoos01" Content="Kies bestand 1..." HorizontalAlignment="Left" Margin="59,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.098,-1.429" Height="33" Width="129" FontSize="14" Click="BtnChoos01_Click"/>
+        <Button x:Name="BtnChoos02" Content="Kies bestand 2..." HorizontalAlignment="Left" Margin="59,140,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.098,-1.429" Height="33" Width="129" FontSize="14" Click="BtnChoos02_Click"/>
+        <TextBox x:Name="txtPath01" HorizontalAlignment="Left" Height="33" Margin="361,49,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="408" FontSize="16"/>
+        <TextBox x:Name="txtPath02" HorizontalAlignment="Left" Height="33" Margin="361,140,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="408"/>
+        <Button Content="Vergelijk" HorizontalAlignment="Left" Height="45" Margin="550,280,0,0" VerticalAlignment="Top" Width="204" Click="Vergelijk_Click"/>
+
+    </Grid>
+</Window>
