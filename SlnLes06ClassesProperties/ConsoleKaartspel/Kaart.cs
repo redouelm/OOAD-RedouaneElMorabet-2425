@@ -13,7 +13,6 @@ namespace ConsoleKaartspel
 
         public Kaart(int nmr, char klr)
         {
-
             if (nmr < 1 || nmr > 13)
             {
                 throw new ArgumentException("Nummer moet tussen 1 en 13 liggen.");
@@ -26,8 +25,6 @@ namespace ConsoleKaartspel
 
             Nummer = nmr;
             Kleur = klr;
-
-
         }
         public override string ToString()
         {

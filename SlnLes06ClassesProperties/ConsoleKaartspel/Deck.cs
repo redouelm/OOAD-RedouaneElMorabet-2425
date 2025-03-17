@@ -9,11 +9,11 @@ namespace ConsoleKaartspel
     internal class Deck
     {
         public List<Kaart> Kaarten { get; private set; } = new List<Kaart>();
-        private static char[] Kleuren = { 'C', 'S', 'H', 'D' }; 
+        private static char[] kleuren = { 'C', 'S', 'H', 'D' }; 
         public Deck()
         {
             // Maak alle 52 kaarten
-            foreach (char kleur in Kleuren)
+            foreach (char kleur in kleuren)
             {
                 for (int nummer = 1; nummer <= 13; nummer++)
                 {
@@ -30,7 +30,6 @@ namespace ConsoleKaartspel
                 int j = rnd.Next(i + 1);
                 (Kaarten[i], Kaarten[j]) = (Kaarten[j], Kaarten[i]);
             }
-
         }
         public Kaart NeemKaart()
         {

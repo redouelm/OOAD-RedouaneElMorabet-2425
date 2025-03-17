@@ -38,6 +38,5 @@ namespace ConsoleKaartspel
             Kaarten.RemoveAt(index); 
             return gekozenKaart;
         }
-
     }
 }

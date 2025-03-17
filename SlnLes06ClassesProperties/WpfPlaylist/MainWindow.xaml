@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfPlaylist"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="WPF Playlist" Height="450" Width="800" Background="Beige">
+    <DockPanel LastChildFill="True" Margin="10">
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock x:Name="txtStatusSong"/>
+        </StatusBar>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListBox x:Name="LstBoxSongs" Grid.Column="0" Grid.Row="0" Margin="10" SelectionChanged="ListBox_SelectionChanged">
+                
+            </ListBox>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Margin="10">
+                <Image x:Name="imgbxArtist" Height="150" Stretch="UniformToFill" Margin="0,0,0,10"/>
+                <TextBlock x:Name="txtNameArtist" Text="Naam artiets" FontWeight="Bold" FontSize="14" />
+                <TextBlock x:Name="txtBirthDay" Text="BirthDay" FontStyle="Italic" FontSize="12" Margin="0,5,0,5"/>
+                <TextBlock x:Name="txtBio" TextWrapping="Wrap">
+                </TextBlock>
+            </StackPanel>
+
+            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="btnShuffle" Content="SHUFFLE LIST" Margin="0,0,10,0" Width="100" Height="30"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0">
+                    <Button x:Name="btnStop" Content="STOP" Width="60" Height="30" Margin="0,0,10,0" Click="btnStop_Click"/>
+                    <Button x:Name="btnPlay" Content="PLAY" Width="60" Height="30" Click="BtnPlay_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
 </Window>
