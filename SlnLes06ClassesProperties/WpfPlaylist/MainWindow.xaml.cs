@@ -26,7 +26,6 @@ namespace WpfPlaylist
         List<Artist> artists = new List<Artist>();
         List<Song> songs = new List<Song>();
         Song currentSong;
-        Song song;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,43 +35,53 @@ namespace WpfPlaylist
         }
         private void LoadArtists()
         {
-            string excelPath = "WpfPlaylistData.xlsx";
-            var workbook = new XLWorkbook(excelPath);
-            var worksheet = workbook.Worksheets.First();
-
-            foreach (var row in worksheet.RowsUsed().Skip(1))
+            artists = new List<Artist>
             {
-                string name = row.Cell(1).GetString();
-                DateTime birthDate = DateTime.ParseExact(row.Cell(2).GetString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string bio = row.Cell(3).GetString();
-                string imagePath = row.Cell(4).GetString();
-
-                artists.Add(new Artist(name, birthDate, bio, imagePath));
-            }
+                new Artist(
+                 "Zakir Houssein",
+                 new DateTime(1951, 3, 9),
+                 "Ustad Zakir Hussain is an Indian tabla player, composer, percussionist, music producer and film actor.",
+                 "zakir-houssein.jpg"),
+                new Artist(
+            "Anouar Brahem",
+            new DateTime(1957, 10, 20),
+            "Anouar Brahem is a Tunisian oud player and composer. He is widely acclaimed as an innovator in his field",
+            "anouar-brahem.jpg"),
+                
+                new Artist(
+            "Baaba Maal",
+            new DateTime(1953, 6, 13),
+            "Baaba Maal is a Senegalese singer and guitarist born in Podor, on the Senegal River. In addition to acoustic guitar, he also plays percussion.",
+            "baaba-maal.jpg"),
+                new Artist(
+            "Mohammed Abdu",
+            new DateTime(1949, 6, 12),
+            "Mohammed Abdu is a Saudi singer who is renowned across the Middle East and Arab world. He has been described as “Artist of the Arabs”.",
+            "mohammed-abdu.jpg")
+            };
         }
         private void LoadSongs()
         {
-            string mp3Folder = "Mp3";
-            var mp3Files = Directory.GetFiles(mp3Folder, "*.mp3");
+            songs = new List<Song>
+{
+    new Song("La Belvedere Assiege", FindArtist("Anouar Brahem"), 1991, new TimeSpan(0, 4, 14), new Uri(System.IO.Path.GetFullPath("Mp3/belvedere-assiege-1m.mp3"), UriKind.Absolute)),
 
-            foreach (var file in mp3Files)
-            {
-                var tagFile = TagLib.File.Create(file);
-                string songName = tagFile.Tag.Title;
-                string artistName = tagFile.Tag.FirstPerformer;
-                int year = (int)(tagFile.Tag.Year);
-                TimeSpan duration = tagFile.Properties.Duration;
+    new Song("Ronda", FindArtist("Anouar Brahem"), 1991, new TimeSpan(0, 3, 7), new Uri(System.IO.Path.GetFullPath("Mp3/ronda-1m.mp3"), UriKind.Absolute)),
 
-                var artist = artists.FirstOrDefault(a => a.Name.Equals(artistName, StringComparison.OrdinalIgnoreCase));
-                if (artist == null)
-                {
-                    artist = new Artist(artistName, DateTime.MinValue, "Onbekende artiest", "");
-                    artists.Add(artist);
-                }
+    new Song("Raf Raf", FindArtist("Anouar Brahem"), 1991, new TimeSpan(0, 3, 33), new Uri(System.IO.Path.GetFullPath("Mp3/raf-raf-1m.mp3"), UriKind.Absolute)),
 
-                var song = new Song(songName, artist, year, duration, new Uri(System.IO.Path.GetFullPath(file)));
-                songs.Add(song);
-            }
+    new Song("The great indian desert", FindArtist("Zakir Houssein"), 2007, new TimeSpan(0, 6, 54), new Uri(System.IO.Path.GetFullPath("Mp3/great-indian-desert-1m.mp3"), UriKind.Absolute)),
+
+    new Song("Yero Mama", FindArtist("Baaba Maal"), 1993, new TimeSpan(0, 4, 40), new Uri(System.IO.Path.GetFullPath("Mp3/yero-mama-1m.mp3"), UriKind.Absolute)),
+
+    new Song("Samba", FindArtist("Baaba Maal"), 1993, new TimeSpan(0, 5, 43), new Uri(System.IO.Path.GetFullPath("Mp3/samba-1m.mp3"), UriKind.Absolute)),
+
+    new Song("Habibi", FindArtist("Mohammed Abdu"), 2001, new TimeSpan(0, 11, 42), new Uri(System.IO.Path.GetFullPath("Mp3/habibi-1m.mp3"), UriKind.Absolute))
+};
+        }
+        private Artist FindArtist(string name)
+        {
+            return artists.FirstOrDefault(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -86,6 +95,7 @@ namespace WpfPlaylist
         private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
+            txtStatusSong.Text += " STOPPED";
         }
         private void StopSong()
         {
@@ -95,8 +105,12 @@ namespace WpfPlaylist
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (currentSong != null)
-                PlaySong(currentSong);
+            if (LstBoxSongs.SelectedItem is Song selectedSong)
+            {
+                mediaPlayer.Open(selectedSong.Uri);
+                mediaPlayer.Play();
+                txtStatusSong.Text = $"Now playing: \"{selectedSong.Name}\" by {selectedSong.Artist.Name}";
+            }
         }
         private void PlaySong(Song song)
         {
@@ -109,17 +123,9 @@ namespace WpfPlaylist
         private void ShowArtistInfo(Artist artist)
         {
             txtNameArtist.Text = artist.Name;
-            txtBirthDay.Text = $"born {artist.BirthDateString}";
+            txtBirthDay.Text = $"Born {artist.BirthDate:dd/MM/yyyy}";
             txtBio.Text = artist.Bio;
-
-            if (File.Exists(artist.ImagePath))
-            {
-                imgbxArtist.Source = new BitmapImage(new Uri(Path.GetFullPath(artist.ImagePath)));
-            }
-            else
-            {
-                imgbxArtist.Source = null; // Of default afbeelding
-            }
+            imgbxArtist.Source = new BitmapImage(new Uri(artist.ImagePath, UriKind.Relative));
         }
     }
 }

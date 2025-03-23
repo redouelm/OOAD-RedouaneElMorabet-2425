@@ -8,11 +8,11 @@ namespace WpfPlaylist
 {
     internal class Song
     {
-        string Name { get; set; }              
-        Artist Artist { get; set; }            
-        int Year { get; set; }                
+        public string Name { get; set; }              
+        public Artist Artist { get; set; }            
+        public int Year { get; set; }                
         TimeSpan Duration { get; set; }       
-        Uri Uri { get; set; }
+        public Uri Uri { get; set; }
         public Song(string name, Artist artist, int year, TimeSpan duration, Uri uri)
         {
             Name = name;

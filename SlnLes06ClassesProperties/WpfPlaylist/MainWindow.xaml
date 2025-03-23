@@ -43,8 +43,8 @@
 
                 <Button Grid.Column="0" x:Name="btnShuffle" Content="SHUFFLE LIST" Margin="0,0,10,0" Width="100" Height="30"/>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0">
-                    <Button x:Name="btnStop" Content="STOP" Width="60" Height="30" Margin="0,0,10,0" Click="btnStop_Click"/>
+                <StackPanel Grid.Column="1"  Orientation="Horizontal" Margin="0">
+                    <Button x:Name="btnStop" Content="STOP" Width="60" Height="30" Margin="0,0,10,0" Click="BtnStop_Click"/>
                     <Button x:Name="btnPlay" Content="PLAY" Width="60" Height="30" Click="BtnPlay_Click"/>
                 </StackPanel>
             </Grid>
