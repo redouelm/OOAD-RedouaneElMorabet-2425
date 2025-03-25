@@ -23,12 +23,12 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <ListBox x:Name="LstBoxSongs" Grid.Column="0" Grid.Row="0" Margin="10" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox x:Name="lstBoxSongs" Grid.Column="0" Grid.Row="0" Margin="10" SelectionChanged="ListBox_SelectionChanged" IsSynchronizedWithCurrentItem="True">
                 
             </ListBox>
 
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10">
-                <Image x:Name="imgbxArtist" Height="150" Stretch="UniformToFill" Margin="0,0,0,10"/>
+                <Image x:Name="imgBxArtist" Height="150" Stretch="UniformToFill" Margin="0,0,0,10"/>
                 <TextBlock x:Name="txtNameArtist" Text="Naam artiets" FontWeight="Bold" FontSize="14" />
                 <TextBlock x:Name="txtBirthDay" Text="BirthDay" FontStyle="Italic" FontSize="12" Margin="0,5,0,5"/>
                 <TextBlock x:Name="txtBio" TextWrapping="Wrap">
@@ -41,7 +41,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" x:Name="btnShuffle" Content="SHUFFLE LIST" Margin="0,0,10,0" Width="100" Height="30"/>
+                <Button Grid.Column="0" x:Name="btnShuffle" Content="SHUFFLE LIST" Margin="0,0,10,0" Width="100" Height="30" Click="BtnShuffle_Click"/>
 
                 <StackPanel Grid.Column="1"  Orientation="Horizontal" Margin="0">
                     <Button x:Name="btnStop" Content="STOP" Width="60" Height="30" Margin="0,0,10,0" Click="BtnStop_Click"/>

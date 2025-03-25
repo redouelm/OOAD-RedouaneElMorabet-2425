@@ -31,7 +31,7 @@ namespace WpfPlaylist
             InitializeComponent();
             LoadArtists();
             LoadSongs();
-            LstBoxSongs.ItemsSource = songs;
+            lstBoxSongs.ItemsSource = songs;
         }
         private void LoadArtists()
         {
@@ -85,7 +85,7 @@ namespace WpfPlaylist
         }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (LstBoxSongs.SelectedItem is Song selectedSong)
+            if (lstBoxSongs.SelectedItem is Song selectedSong)
             {
                 PlaySong(selectedSong);
                 ShowArtistInfo(selectedSong.Artist);
@@ -94,8 +94,7 @@ namespace WpfPlaylist
 
         private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
-            txtStatusSong.Text += " STOPPED";
+            StopSong();
         }
         private void StopSong()
         {
@@ -105,18 +104,18 @@ namespace WpfPlaylist
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (LstBoxSongs.SelectedItem is Song selectedSong)
+            if (lstBoxSongs.SelectedItem is Song selectedSong)
             {
                 mediaPlayer.Open(selectedSong.Uri);
-                mediaPlayer.Play();
+                PlaySong(selectedSong); 
                 txtStatusSong.Text = $"Now playing: \"{selectedSong.Name}\" by {selectedSong.Artist.Name}";
             }
         }
         private void PlaySong(Song song)
         {
+            mediaPlayer.Play();
             currentSong = song;
             mediaPlayer.Open(song.Uri);
-            mediaPlayer.Play();
             txtStatusSong.Text = $"Now playing: \"{song.Name}\" by {song.Artist.Name}";
         }
 
@@ -125,7 +124,17 @@ namespace WpfPlaylist
             txtNameArtist.Text = artist.Name;
             txtBirthDay.Text = $"Born {artist.BirthDate:dd/MM/yyyy}";
             txtBio.Text = artist.Bio;
-            imgbxArtist.Source = new BitmapImage(new Uri(artist.ImagePath, UriKind.Relative));
+            imgBxArtist.Source = new BitmapImage(new Uri($"Photos/{artist.ImagePath}", UriKind.Relative));
+        }
+
+        private void BtnShuffle_Click(object sender, RoutedEventArgs e)
+        {
+            Random rng = new Random();
+            songs = songs.OrderBy(s => rng.Next()).ToList();
+
+            // Update de ListBox met de nieuwe geshuffelde lijst
+            lstBoxSongs.ItemsSource = null; // Eerst leegmaken
+            lstBoxSongs.ItemsSource = songs; // Opnieuw instellen
         }
     }
 }
