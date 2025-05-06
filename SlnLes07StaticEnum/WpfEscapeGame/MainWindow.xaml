@@ -5,30 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfEscapeGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Escape game" Height="600" Width="900">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="70" />
-            <RowDefinition Height="240" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="240"/>
+            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="txtRoomDesc" Grid.ColumnSpan="3" Padding="10" Margin="20,10" TextWrapping="Wrap" FontSize="16" Background="#FFF9F5F5"/>
-        <TextBlock x:Name="txtMessage" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10" Padding="10" Background="#FFF9F5F5" FontSize="16" Foreground="#FF000099"/>
+
+        <!-- Room description -->
+        <TextBlock x:Name="txtRoomDesc" Grid.ColumnSpan="3" Padding="10" Margin="20,10"
+                   TextWrapping="Wrap" FontSize="16" Background="#FFF9F5F5"/>
+
+        <!-- Messages -->
+        <TextBlock x:Name="txtMessage" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10"
+                   Padding="10" Background="#FFF9F5F5" FontSize="16" Foreground="#FF000099"/>
+
+        <!-- Room items -->
         <TextBlock Text="Room items" Grid.Row="2" Margin="20, 10" VerticalAlignment="Top"/>
-        <ListBox x:Name="lstRoomItems" Grid.Row="2" Margin="20, 40, 20, 30" SelectionChanged="LstItems_SelectionChanged"/>
+        <ListBox x:Name="lstRoomItems" Grid.Row="2" Margin="20, 40, 20, 30"
+                 SelectionChanged="LstItems_SelectionChanged"/>
+
+        <!-- Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="1" Margin="10, 35, 10, 10">
-            <Button x:Name="btnCheck" Content="&lt;- CHECK" Height="35" Margin="5" Width="160" IsEnabled="False" Click="BtnCheck_Click"/>
-            <Button x:Name="btnPickUp" Content="PICK UP &gt;&gt;" Height="35" Margin="5" Width="160" IsEnabled="False" Click="BtnPickUp_Click"/>
-            <Button x:Name="btnUseOn" Content="&lt;- USE ON -&gt;" Height="35" Margin="5" Width="160" IsEnabled="False" Click="BtnUseOn_Click"/>
-            <Button x:Name="btnDrop" Content="&lt;&lt; DROP" Height="35" Margin="5" Width="160" IsEnabled="False" Click="BtnDrop_Click"/>
+            <Button x:Name="btnCheck" Content="&lt;- CHECK" Height="35" Margin="5"
+                    Width="160" IsEnabled="False" Click="BtnCheck_Click"/>
+            <Button x:Name="btnPickUp" Content="PICK UP &gt;&gt;" Height="35" Margin="5"
+                    Width="160" IsEnabled="False" Click="BtnPickUp_Click"/>
+            <Button x:Name="btnUseOn" Content="&lt;- USE ON -&gt;" Height="35" Margin="5"
+                    Width="160" IsEnabled="False" Click="BtnUseOn_Click"/>
+            <Button x:Name="btnDrop" Content="&lt;&lt; DROP" Height="35" Margin="5"
+                    Width="160" IsEnabled="False" Click="BtnDrop_Click"/>
         </StackPanel>
-        <TextBlock Text="Picked up items" Grid.Row="2" Grid.Column="2" Margin="20,10" VerticalAlignment="Top" />
-        <ListBox x:Name="lstMyItems" Grid.Row="2" Grid.Column="2" Margin="20, 40, 20, 30" SelectionChanged="LstItems_SelectionChanged"/>
+
+        <!-- Inventory -->
+        <TextBlock Text="Picked up items" Grid.Row="2" Grid.Column="2" Margin="20,10"
+                   VerticalAlignment="Top"/>
+        <ListBox x:Name="lstMyItems" Grid.Row="2" Grid.Column="2" Margin="20, 40, 20, 30"
+                 SelectionChanged="LstItems_SelectionChanged"/>
+
+        <!-- Room doors section with green border -->
+        <Border Grid.Row="3" Grid.Column="0" Margin="20,40,10,10" BorderBrush="Green" BorderThickness="2" CornerRadius="5">
+            <StackPanel Margin="5">
+                <Label Content="Room doors"/>
+                <ListBox x:Name="DoorListBox" Height="100" SelectionChanged="DoorListBox_SelectionChanged"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Door buttons -->
+        <StackPanel Grid.Row="3" Grid.Column="1" Margin="10, 40, 10, 10">
+            <Button x:Name="OpenDoorButton" Content="&lt;- OPEN WITH -&gt;" Width="120" Margin="5" Click="OpenDoorButton_Click"/>
+            <Button x:Name="EnterRoomButton" Content="&lt;- ENTER" Width="120" Margin="5" Click="EnterRoomButton_Click"/>
+        </StackPanel>
+
+        <!-- Room image -->
+        <Image x:Name="RoomImage" Grid.Row="3" Grid.Column="2" Height="130"
+               Stretch="Uniform" Margin="20,10,20,10"/>
     </Grid>
 </Window>

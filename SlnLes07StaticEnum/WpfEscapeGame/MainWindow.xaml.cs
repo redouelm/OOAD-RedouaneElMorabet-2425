@@ -23,6 +23,7 @@ namespace WpfEscapeGame
     public partial class MainWindow : Window
     {
         Room currentRoom; // will become useful in later versions
+        private List<Item> inventory;
         List<Item> myItems = new List<Item>(); // Player's inventory
         Item selectedRoomItem;
         Item selectedInventoryItem;
@@ -30,6 +31,8 @@ namespace WpfEscapeGame
         public MainWindow()
         {
             InitializeComponent();
+
+
             // define room
             Room room1 = new Room()
             {
@@ -94,6 +97,89 @@ namespace WpfEscapeGame
             room1.Items.Add(locker);
             room1.Items.Add(chair);
             room1.Items.Add(poster);
+            // Define other rooms
+Room livingRoom = new Room()
+{
+    Name = "living room",
+    Description = "A cozy living room with a couch, a coffee table, and a door to the left."
+};
+
+Room computerRoom = new Room()
+{
+    Name = "computer room",
+    Description = "A small room filled with tech gear and humming servers."
+};
+
+// Add some items to living room
+livingRoom.Items.Add(new Item()
+{
+    Name = "remote control",
+    Description = "A remote control for something. Maybe the TV?"
+});
+livingRoom.Items.Add(new Item()
+{
+    Name = "sofa",
+    Description = "A comfy sofa. No hidden coins here, sadly.",
+    IsPortable = false
+});
+
+// Add some items to computer room
+computerRoom.Items.Add(new Item()
+{
+    Name = "usb stick",
+    Description = "A USB stick labeled 'Secret Data'. Might be useful later."
+});
+computerRoom.Items.Add(new Item()
+{
+    Name = "monitor",
+    Description = "A black screen. It doesn't seem to be on.",
+    IsPortable = false
+});
+
+// Define doors
+Door doorToLiving = new Door()
+{
+    Name = "door to living room",
+    Description = "A heavy door. Feels locked.",
+    IsLocked = true,
+    Key = key2,
+    ToRoom = livingRoom
+};
+
+Door doorToComputer = new Door()
+{
+    Name = "door to computer room",
+    Description = "A wooden door. It's open.",
+    IsLocked = false,
+    ToRoom = computerRoom
+};
+
+Door doorBackToLiving = new Door()
+{
+    Name = "door to living room",
+    Description = "Back to the living room.",
+    IsLocked = false,
+    ToRoom = livingRoom
+};
+
+Door exitDoor = new Door()
+{
+    Name = "exit door",
+    Description = "This must be the way out... but it's locked tight.",
+    IsLocked = true,
+    ToRoom = null
+};
+
+// Add doors to rooms
+room1.Doors.Add(doorToLiving);
+livingRoom.Doors.Add(doorToComputer);
+computerRoom.Doors.Add(doorBackToLiving);
+livingRoom.Doors.Add(exitDoor);
+
+            room1.ImagePath = "Images/bedroom.png";
+            livingRoom.ImagePath = "Images/livingroom.png";
+            computerRoom.ImagePath = "Images/computerroom.png";
+
 
             // start game
             currentRoom = room1;
@@ -119,6 +205,12 @@ namespace WpfEscapeGame
                 lstMyItems.Items.Add(itm);
             }
 
+            DoorListBox.Items.Clear();
+            foreach (Door door in currentRoom.Doors)
+            {
+                DoorListBox.Items.Add(door);
+            }
+
             // Reset selection and disable buttons
             btnCheck.IsEnabled = false;
             btnPickUp.IsEnabled = false;
@@ -127,7 +219,25 @@ namespace WpfEscapeGame
 
             selectedRoomItem = null;
             selectedInventoryItem = null;
+
+            // Disable door buttons initially
+            OpenDoorButton.IsEnabled = false;
+            EnterRoomButton.IsEnabled = false;
+
+            DoorListBox.ItemsSource = null;
+            DoorListBox.ItemsSource = currentRoom.Doors;
+
+            if (!string.IsNullOrEmpty(currentRoom.ImagePath))
+            {
+                RoomImage.Source = new BitmapImage(new Uri(currentRoom.ImagePath, UriKind.Relative));
+            }
+            else
+            {
+                RoomImage.Source = null;
+            }
+
         }
+
 
         /// <summary>
         /// Handle selection changes in both ListBoxes
@@ -247,6 +357,102 @@ namespace WpfEscapeGame
                 myItems.Remove(selectedInventoryItem);
                 UpdateUI();
             }
+        }
+
+        private Door selectedDoor;
+
+        private void DoorListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedDoor = DoorListBox.SelectedItem as Door;
+            if (selectedDoor != null)
+            {
+                OpenDoorButton.IsEnabled = selectedDoor.IsLocked;
+                EnterRoomButton.IsEnabled = !selectedDoor.IsLocked;
+            }
+        }
+
+        private void OpenDoorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedDoor != null && selectedInventoryItem != null)
+            {
+                if (selectedDoor.IsLocked && selectedDoor.Key == selectedInventoryItem)
+                {
+                    selectedDoor.IsLocked = false;
+                    txtMessage.Text = $"I unlocked the {selectedDoor.Name} using the {selectedInventoryItem.Name}.";
+                    UpdateUI();
+                }
+                else
+                {
+                    txtMessage.Text = RandomMessageGenerator.GetRandomMessage(MessageType.KeyDoesNotFit);
+                }
+            }
+            else
+            {
+                txtMessage.Text = "You need to select a key from your inventory to unlock the door.";
+            }
+        }
+
+        private void EnterRoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedDoor != null && !selectedDoor.IsLocked && selectedDoor.ToRoom != null)
+            {
+                currentRoom = selectedDoor.ToRoom;
+                txtRoomDesc.Text = currentRoom.Description;
+                txtMessage.Text = $"I walk through the {selectedDoor.Name}.";
+                UpdateUI();
+            }
+            else if (selectedDoor?.ToRoom == null)
+            {
+                txtMessage.Text = "This door leads nowhere. Maybe it's the exit?";
+            }
+        }
+
+
+        private void InitializeGame()
+        {
+            // Maak items
+            Item bigKey = new Item { Name = "big key", Description = "A large old key." };
+            Item chair = new Item { Name = "chair" };
+            Item computer = new Item { Name = "computer" };
+            Item screen = new Item { Name = "monitor" };
+
+            // Maak kamers
+            Room bedroom = new Room { Name = "bedroom", Description = "I seem to be in a medium sized bedroom..." };
+            Room livingRoom = new Room { Name = "living room", Description = "A cozy living room with a sofa and TV." };
+            Room computerRoom = new Room { Name = "computer room", Description = "A quiet room with a desk and computer." };
+
+            // Items toevoegen aan kamers
+            bedroom.Items.AddRange(new[] {
+        new Item { Name = "poster" },
+        new Item { Name = "floor mat" },
+        new Item { Name = "bed" },
+        new Item { Name = "locker", IsLocked = true, Key = bigKey, HiddenItem = new Item { Name = "note" } },
+        chair,
+        bigKey
+    });
+
+            livingRoom.Items.Add(new Item { Name = "remote" });
+
+            computerRoom.Items.AddRange(new[] { computer, screen });
+
+            // Maak deuren
+            Door greenDoor = new Door { Name = "green door", IsLocked = true, Key = bigKey, Destination = livingRoom };
+            Door toComputerRoom = new Door { Name = "hallway door", Destination = computerRoom };
+            Door backToLiving = new Door { Name = "return door", Destination = livingRoom };
+            Door lockedToNowhere = new Door { Name = "locked exit", IsLocked = true, Destination = null };
+
+            // Deuren aan kamers koppelen
+            bedroom.Doors.Add(greenDoor);
+            livingRoom.Doors.Add(toComputerRoom);
+            livingRoom.Doors.Add(lockedToNowhere);
+            computerRoom.Doors.Add(backToLiving);
+
+            // Stel startkamer en inventory in
+            currentRoom = bedroom;
+            inventory = new List<Item>();
+
+            // UI updaten
+            UpdateUI();
         }
     }
 }
