@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+using System.Data.SqlClient;
+
+namespace CLBenchmark
+{
+    public class AdminRepository
+    {
+        private readonly string _connStr;
+
+        public AdminRepository()
+        {
+            _connStr = ConfigurationManager.ConnectionStrings["connStr"].ConnectionString;
+        }
+
+        public bool Login(string email, string password)
+        {
+            // Hardcoded admin-login
+            const string adminEmail = "admin";
+            const string adminPasswordHash = "8tgaJg3qihAN1ReYTlPFanUj2WlCqDS5zcJJvU6Meqk=";
+            if (email == adminEmail)
+            {
+                return PasswordHasher.Verify(password, adminPasswordHash);
+            }
+
+            using SqlConnection conn = new SqlConnection(_connStr);
+            conn.Open();
+            string sql = "SELECT password FROM Companies WHERE email = @Email AND status = 'approved'";
+            using SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            var dbHashedPassword = cmd.ExecuteScalar() as string;
+            return dbHashedPassword != null && PasswordHasher.Verify(password, dbHashedPassword);
+        }
+    }
+}
