@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\logoOdisee.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\logoOdisee.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CLBenchmark\CLBenchmark.csproj" />
+    <ProjectReference Include="..\WpfAdminApp\WpfAdminApp.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -76,39 +76,37 @@ namespace WpfAdminApp.Pages
             }
         }
 
+        //private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    var listBox = sender as ListBox;
+        //    if (listBox?.SelectedItem == null) return;
+
+        //    string selectedName = listBox.SelectedItem.ToString();
+        //    selectedCompany = allCompanies.Values.FirstOrDefault(c => c.Name == selectedName);
+        //    if (selectedCompany == null) return;
+        //}
+
         private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox?.SelectedItem == null) return;
+            ListBox listBox = sender as ListBox;
+            if (listBox == null || listBox.SelectedItem == null) return;
 
             string selectedName = listBox.SelectedItem.ToString();
-            selectedCompany = allCompanies.Values.FirstOrDefault(c => c.Name == selectedName);
-            if (selectedCompany == null) return;
 
-            //txtId.Text = selectedCompany.Id.ToString();
-            //txtName.Text = selectedCompany.Name;
-            //txtEmail.Text = selectedCompany.Email;
-            //cmbStatus.SelectedItem = cmbStatus.Items
-            //    .Cast<ComboBoxItem>()
-            //    .FirstOrDefault(i => i.Content.ToString() == selectedCompany.Status);
+            Company gevondenCompany = null;
+            foreach (Company c in allCompanies.Values)
+            {
+                if (c.Name == selectedName)
+                {
+                    gevondenCompany = c;
+                    break;
+                }
+            }
+
+            if (gevondenCompany == null) return;
+
+            selectedCompany = gevondenCompany;
         }
-
-        //private void SaveChanges_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (selectedCompany == null) return;
-
-        //    //Update lokaal object
-        //    selectedCompany.Name = txtName.Text;
-        //    selectedCompany.Email = txtEmail.Text;
-        //    selectedCompany.Status = (cmbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
-
-        //    //Update DB
-        //    var repo = new CompanyRepository();
-        //    repo.UpdateCompany(selectedCompany);
-
-        //    //Refresh Lists
-        //    ReloadCompanies();
-        //}
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new LoginPage());

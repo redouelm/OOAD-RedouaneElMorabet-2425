@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CLBenchmark;
 
 namespace CLBenchmark
 {
@@ -51,6 +52,45 @@ namespace CLBenchmark
             }
 
             return companies;
+        }
+
+        public Company Login(string login, string password)
+        {
+            using SqlConnection conn = new SqlConnection(_connStr);
+            conn.Open();
+
+            string sql = "SELECT id, name, contact, address, zip, city, country, phone, email, btw, login, status, language, logo, password FROM Companies WHERE login = @Login AND (status = 'active' OR status = 'approved')";
+            using SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Login", login);
+
+            using SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                string dbPassword = reader.GetString(14);
+
+                //if (PasswordHasher.Verify(password, dbPassword))
+                {
+                    return new Company
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Contact = reader.GetString(2),
+                        Address = reader.GetString(3),
+                        Zip = reader.GetString(4),
+                        City = reader.GetString(5),
+                        Country = reader.GetString(6),
+                        Phone = reader.GetString(7),
+                        Email = reader.GetString(8),
+                        Btw = reader.GetString(9),
+                        Login = reader.GetString(10),
+                        Status = reader.GetString(11),
+                        Language = reader.GetString(12),
+                        Logo = reader.IsDBNull(13) ? null : (byte[])reader[13]
+                    };
+                }
+            }
+
+            return null;
         }
 
         public void UpdateCompany(Company company)

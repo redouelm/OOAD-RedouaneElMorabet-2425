@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using CLBenchmark;
 
 namespace CLBenchmark
 {
@@ -21,5 +22,9 @@ namespace CLBenchmark
         {
             return Hash(password) == hash;
         }
+        //public static bool VerifyBD(string password, string hash) 
+        //{
+        //    return password == Hash(hash);
+        //}
     }
 }

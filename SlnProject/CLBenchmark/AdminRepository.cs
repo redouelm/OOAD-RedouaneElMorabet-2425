@@ -21,7 +21,13 @@ namespace CLBenchmark
         {
             // Hardcoded admin-login
             const string adminEmail = "admin";
-            const string adminPasswordHash = "8tgaJg3qihAN1ReYTlPFanUj2WlCqDS5zcJJvU6Meqk=";
+
+            //password: azerty
+            //const string adminPasswordHash = "8tgaJg3qihAN1ReYTlPFanUj2WlCqDS5zcJJvU6Meqk=";
+
+            //pasword: admin          
+            const string adminPasswordHash = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=";
+
             if (email == adminEmail)
             {
                 return PasswordHasher.Verify(password, adminPasswordHash);

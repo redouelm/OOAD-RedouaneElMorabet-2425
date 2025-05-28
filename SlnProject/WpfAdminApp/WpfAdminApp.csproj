@@ -7,7 +7,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Images\logoOdisee.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\CLBenchmark\CLBenchmark.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Images\logoOdisee.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>
