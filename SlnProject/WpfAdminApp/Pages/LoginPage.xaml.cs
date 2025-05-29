@@ -29,15 +29,13 @@ namespace WpfAdminApp.Pages
         {
             var repo = new AdminRepository();
             bool isValid = repo.Login(txtEmail.Text, pwdPassword.Password);
-            if(isValid)
+            if (isValid)
             {
                 NavigationService.Navigate(new AdminDashboard());
             }
             else
             {
                 MessageBox.Show($"Ongeldige login.");
-
-
             }
         }
     }

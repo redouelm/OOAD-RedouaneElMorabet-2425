@@ -35,7 +35,7 @@
            Stretch="Uniform"
            HorizontalAlignment="Left"
            Margin="0,0,0,10"/>
-                    <TextBlock Text="Admin" Foreground="White" FontWeight="Bold" />
+                    <TextBlock Text="Bedrijf" Foreground="White" FontWeight="Bold"/>
                     <TextBlock Text="Dashboard" Foreground="#888" FontSize="12"/>
                 </StackPanel>
 
@@ -43,12 +43,16 @@
                 <!-- Sidebar menu -->
                 <StackPanel Grid.Row="1" Margin="20,10">
                     <Button Content="🏠 Dashboard" FontSize="18" Margin="0,5" 
-        Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Left"/>
+        Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Left" Click="CompanyDashboardButton_Click"/>
 
-                    <!-- Nieuw: Bewerken-knop -->
-                    <!--<Button Content="✏️ Bewerken" FontSize="18" Margin="0,5"
+                    <!-- Nieuw: yearrepport-knop -->
+                    <Button Content="📄 Jaarrapport" FontSize="18" Margin="0,5"
         Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Left"
-        Click="EditButton_Click"/>-->
+        Click="YearRepportButton_Click"/>
+
+                    <Button Content="💰 Kosten" FontSize="18"
+        Background="Transparent" Foreground="White"
+        BorderThickness="0" HorizontalContentAlignment="Left" Click="CostOverviewButton_Click"/>
                 </StackPanel>
 
 

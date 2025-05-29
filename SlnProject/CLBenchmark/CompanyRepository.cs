@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CLBenchmark;
-
 namespace CLBenchmark
 {
     public class CompanyRepository
@@ -68,7 +67,7 @@ namespace CLBenchmark
             {
                 string dbPassword = reader.GetString(14);
 
-                //if (PasswordHasher.Verify(password, dbPassword))
+                if (PasswordHasher.Verify(password, dbPassword))
                 {
                     return new Company
                     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
-using System.Data.SqlClient;
-
 namespace CLBenchmark
 {
     public class AdminRepository
@@ -22,10 +21,9 @@ namespace CLBenchmark
             // Hardcoded admin-login
             const string adminEmail = "admin";
 
-            //password: azerty
-            //const string adminPasswordHash = "8tgaJg3qihAN1ReYTlPFanUj2WlCqDS5zcJJvU6Meqk=";
-
-            //pasword: admin          
+            // password: azerty
+            // const string adminPasswordHash = "8tgaJg3qihAN1ReYTlPFanUj2WlCqDS5zcJJvU6Meqk=";
+            // pasword: admin
             const string adminPasswordHash = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=";
 
             if (email == adminEmail)

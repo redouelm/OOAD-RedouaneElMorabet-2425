@@ -1,5 +1,4 @@
-﻿using CLBenchmark;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CLBenchmark;
 using WpfAdminApp.Pages;
 
 namespace WpfCompanyApp.Pages
@@ -21,7 +21,6 @@ namespace WpfCompanyApp.Pages
     /// Interaction logic for CompanyDashboard.xaml
     /// </summary>
     /// 
-
     public partial class CompanyDashboard : Page
     {
         private Company _bedrijf;
@@ -52,6 +51,20 @@ namespace WpfCompanyApp.Pages
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new LoginCompany());
+        }
+
+        private void YearRepportButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new YearReportPage(_bedrijf));
+        }
+
+        private void CompanyDashboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new CompanyDashboard(_bedrijf));
+        }
+        private void CostOverviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new CostsPage(_bedrijf));
         }
     }
 }

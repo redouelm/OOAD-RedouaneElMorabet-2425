@@ -19,6 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CLBenchmark\CLBenchmark.csproj" />
     <ProjectReference Include="..\WpfAdminApp\WpfAdminApp.csproj" />
   </ItemGroup>
