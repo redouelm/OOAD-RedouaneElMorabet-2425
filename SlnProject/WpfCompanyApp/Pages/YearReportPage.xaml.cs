@@ -44,7 +44,6 @@ namespace WpfCompanyApp.Pages
             AnswerRepository repo = new AnswerRepository(); 
             if (lstYears.SelectedItem is Yearreport selected)
             {
-                MessageBox.Show($"Geselecteerd jaarrapport ID: {selected.Id}");
                 panelAnswers.Children.Clear();
 
                 List<(string QuestionText, string AnswerValue)> data = repo.GetAnswersWithQuestions(selected.Id);
@@ -58,16 +57,30 @@ namespace WpfCompanyApp.Pages
                 }
             }
         }
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new LoginCompany());
+        }
 
         private void CompanyDashboardButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new CompanyDashboard(_loggedInCompany));
         }
 
-        private void Logout_Click(object sender, RoutedEventArgs e)
+        private void YearReportButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new LoginCompany());
+            NavigationService?.Navigate(new YearReportPage(_loggedInCompany));
         }
+
+        private void CostOverviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new CostsPage(_loggedInCompany));
+        }
+        private void CompareCostsButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new CostComparisonPage(_loggedInCompany));
+        }
+
     }
 }
 

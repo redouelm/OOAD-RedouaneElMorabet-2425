@@ -1,6 +1,4 @@
-﻿using CLBenchmark;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using CLBenchmark;
+using Microsoft.Win32;
 
 namespace WpfAdminApp.Pages
 {
@@ -48,6 +48,7 @@ namespace WpfAdminApp.Pages
             cmbStatus.SelectedItem = cmbStatus.Items
                 .Cast<ComboBoxItem>()
                 .FirstOrDefault(i => i.Content.ToString() == company.Status);
+
             // Toon logo
             if (company.Logo != null && company.Logo.Length > 0)
             {
@@ -65,10 +66,7 @@ namespace WpfAdminApp.Pages
             {
                 LogoPreview.Source = null; // Geen afbeelding beschikbaar
             }
-            
-
         }
-
         private void Save_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             company.Name = txtName.Text;
@@ -87,10 +85,7 @@ namespace WpfAdminApp.Pages
             {
                 company.Logo = _logoBytes;
             }
-
-
-
-            var repo = new CompanyRepository();
+            CompanyRepository repo = new CompanyRepository();
             repo.UpdateCompany(company);
 
             MessageBox.Show("Wijzigingen opgeslagen.");

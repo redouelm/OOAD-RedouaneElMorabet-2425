@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfCompanyApp.Pages"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CostsPage">
@@ -24,49 +25,64 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Logo -->
+            <!-- Logo & Titel -->
             <StackPanel Margin="20" Orientation="Vertical">
                 <Image Source="pack://application:,,,/Images/logoOdisee.png"
-           Width="180" 
-           Stretch="Uniform"
-           HorizontalAlignment="Left"
-           Margin="0,0,0,10"/>
-                <TextBlock Text="Company" Foreground="White" FontWeight="Bold"/>
-                <TextBlock Text="Kosten" Foreground="#AAA" FontSize="12"/>
+               Width="180"
+               Stretch="Uniform"
+               Margin="0,0,0,10"/>
+                <TextBlock Text="Bedrijf" Foreground="White" FontWeight="Bold"/>
+                <TextBlock Text="Vergelijking" Foreground="#AAA" FontSize="12"/>
             </StackPanel>
 
             <!-- Menu -->
             <StackPanel Grid.Row="1" Margin="20,10">
                 <Button Content="🏠 Dashboard" FontSize="18"
-                        Background="Transparent" Foreground="White"
-                        BorderThickness="0" HorizontalContentAlignment="Left"
-                        Click="DashboardButton_Click"/>
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left"
+                Click="CompanyDashboardButton_Click"/>
+
+                <Button Content="📄 Jaarrapport" FontSize="18"
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left"
+                Click="YearReportButton_Click"/>
 
                 <Button Content="💰 Kosten" FontSize="18"
-                        Background="Transparent" Foreground="White"
-                        BorderThickness="0" HorizontalContentAlignment="Left"/>
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left"
+                Click="CostOverviewButton_Click"/>
+
+                <Button Content="📊 Vergelijken" FontSize="18"
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left" Click="CompareCostsButton_Click"/>
             </StackPanel>
 
             <!-- Logout -->
             <StackPanel Grid.Row="2" Margin="20,10">
                 <Button Content="👋 Logout" FontSize="18"
-                        Background="Transparent" Foreground="White"
-                        BorderThickness="0" HorizontalAlignment="Left"
-                        Click="LogoutButton_Click"/>
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalAlignment="Left"
+                Click="LogoutButton_Click"/>
             </StackPanel>
         </Grid>
 
-        <!-- Hoofdinhoud met filters en lijst -->
+        <!-- Main Content -->
         <Grid Grid.Column="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <!-- Filters + lijst -->
+                <ColumnDefinition Width="3*"/>
+                <!-- Diagram -->
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <!-- Filters -->
                 <RowDefinition Height="*"/>
-                <!-- Lijst -->
+                <!-- Inhoud -->
             </Grid.RowDefinitions>
 
-            <!-- Filters -->
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <!-- Filters bovenaan -->
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="0" Margin="0,0,0,10">
                 <TextBlock Text="Jaar:" VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <ComboBox x:Name="cmbYear" Width="100" SelectionChanged="Filter_Changed" Margin="0,0,20,0"/>
                 <TextBlock Text="Kosttype:" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -74,9 +90,18 @@
             </StackPanel>
 
             <!-- Kostenlijst -->
-            <ScrollViewer Grid.Row="1">
-                <StackPanel x:Name="panelCosts"/>
+            <ScrollViewer Grid.Column="0" Grid.Row="1">
+                <StackPanel x:Name="panelCosts" />
             </ScrollViewer>
+
+            <!-- Diagram -->
+            <Grid Grid.Column="1" Grid.Row="1">
+                <lvc:CartesianChart Series="{Binding Series}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}"
+                                    LegendPosition="Right"
+                                    Margin="20"/>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

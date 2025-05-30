@@ -1,5 +1,4 @@
-﻿using CLBenchmark;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using CLBenchmark;
 
 namespace WpfAdminApp.Pages
 {
@@ -22,14 +22,12 @@ namespace WpfAdminApp.Pages
     /// </summary>
     public partial class AdminDashboard : Page
     {
-        private Dictionary<int, Company> allCompanies = new();
+        private Dictionary<int, Company> allCompanies = new ();
         private Company selectedCompany;
 
         public AdminDashboard()
         {
             InitializeComponent();
-
-
             lstActive.SelectionChanged += Company_SelectionChanged;
             lstPending.SelectionChanged += Company_SelectionChanged;
             lstRejected.SelectionChanged += Company_SelectionChanged;
@@ -41,8 +39,6 @@ namespace WpfAdminApp.Pages
         {
             ReloadCompanies(); // herlaadt bedrijven telkens wanneer deze pagina wordt getoond
         }
-
-
         private void ReloadCompanies()
         {
             lstActive.Items.Clear();
@@ -76,16 +72,14 @@ namespace WpfAdminApp.Pages
             }
         }
 
-        //private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
+        // private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // {
         //    var listBox = sender as ListBox;
         //    if (listBox?.SelectedItem == null) return;
-
         //    string selectedName = listBox.SelectedItem.ToString();
         //    selectedCompany = allCompanies.Values.FirstOrDefault(c => c.Name == selectedName);
         //    if (selectedCompany == null) return;
-        //}
-
+        // }
         private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox listBox = sender as ListBox;
@@ -122,7 +116,6 @@ namespace WpfAdminApp.Pages
                 MessageBox.Show("Selecteer eerst een bedrijf om te bewerken.");
             }
         }
-
     }
 }
 

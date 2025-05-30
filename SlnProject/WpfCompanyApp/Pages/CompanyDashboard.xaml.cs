@@ -36,7 +36,7 @@ namespace WpfCompanyApp.Pages
 
         private void ToonGegevens()
         {
-            lblGegevens.Content =
+            txtGegevens.Text =
                 $"Naam: {_bedrijf.Name}\n" +
                 $"Contact: {_bedrijf.Contact}\n" +
                 $"Adres: {_bedrijf.Address}, {_bedrijf.Zip} {_bedrijf.City}, {_bedrijf.Country}\n" +
@@ -65,6 +65,10 @@ namespace WpfCompanyApp.Pages
         private void CostOverviewButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new CostsPage(_bedrijf));
+        }
+        private void CompareCostsButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new CostComparisonPage(_bedrijf));
         }
     }
 }

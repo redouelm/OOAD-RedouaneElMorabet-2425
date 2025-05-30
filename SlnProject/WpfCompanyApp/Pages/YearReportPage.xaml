@@ -24,36 +24,44 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Logo / Info -->
-            <StackPanel Margin="20" Orientation="Vertical" Grid.Row="0">
+            <!-- Logo & Titel -->
+            <StackPanel Margin="20" Orientation="Vertical">
                 <Image Source="pack://application:,,,/Images/logoOdisee.png"
-Width="180" 
-Stretch="Uniform"
-HorizontalAlignment="Left"
-Margin="0,0,0,10"/>
+               Width="180"
+               Stretch="Uniform"
+               Margin="0,0,0,10"/>
                 <TextBlock Text="Bedrijf" Foreground="White" FontWeight="Bold"/>
-                <TextBlock Text="Jaarrapport" Foreground="#888" FontSize="12"/>
+                <TextBlock Text="Vergelijking" Foreground="#AAA" FontSize="12"/>
             </StackPanel>
 
             <!-- Menu -->
             <StackPanel Grid.Row="1" Margin="20,10">
-                <Button Content="🏠 Dashboard" FontSize="18" Margin="0,5" 
-                        Background="Transparent" Foreground="White" BorderThickness="0" 
-                        HorizontalContentAlignment="Left" Click="CompanyDashboardButton_Click"/>
+                <Button Content="🏠 Dashboard" FontSize="18"
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left"
+                Click="CompanyDashboardButton_Click"/>
 
-                <!--<Button Content="📄 Jaarrapport" FontSize="18" Margin="0,5"
-                        Background="Transparent" Foreground="White" BorderThickness="0" 
-                        HorizontalContentAlignment="Left" Click="YearRepportButton_Click"/>-->
+                <Button Content="📄 Jaarrapport" FontSize="18"
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left"
+                Click="YearReportButton_Click"/>
+
                 <Button Content="💰 Kosten" FontSize="18"
-        Background="Transparent" Foreground="White"
-        BorderThickness="0" HorizontalContentAlignment="Left"/>
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left"
+                Click="CostOverviewButton_Click"/>
+
+                <Button Content="📊 Vergelijken" FontSize="18"
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalContentAlignment="Left" Click="CompareCostsButton_Click"/>
             </StackPanel>
 
             <!-- Logout -->
             <StackPanel Grid.Row="2" Margin="20,10">
-                <Button Content="👋 Logout" FontSize="18" Margin="0,5"
-                        Background="Transparent" Foreground="White" BorderThickness="0" 
-                        HorizontalAlignment="Left" Click="Logout_Click"/>
+                <Button Content="👋 Logout" FontSize="18"
+                Background="Transparent" Foreground="White"
+                BorderThickness="0" HorizontalAlignment="Left"
+                Click="LogoutButton_Click"/>
             </StackPanel>
         </Grid>
 

@@ -3,79 +3,69 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfCompanyApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CompanyDashboard">
 
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220"/>
-                <!-- Sidebar -->
-                <ColumnDefinition Width="*"/>
-                <!-- Main content -->
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <!--  Sidebar -->
-            <Grid Background="#2A2F4A" Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <!-- Logo/Admin -->
-                    <RowDefinition Height="*"/>
-                    <!-- Menu items -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Logout -->
-                </Grid.RowDefinitions>
+        <!-- Sidebar -->
+        <Grid Background="#2A2F4A" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <!-- Admin logo/info -->
-                <StackPanel Margin="20,20,20,10" Orientation="Vertical" Grid.Row="0">
-                    <Image Source="pack://application:,,,/Images/logoOdisee.png"
-           Width="180" 
-           Stretch="Uniform"
-           HorizontalAlignment="Left"
-           Margin="0,0,0,10"/>
-                    <TextBlock Text="Bedrijf" Foreground="White" FontWeight="Bold"/>
-                    <TextBlock Text="Dashboard" Foreground="#888" FontSize="12"/>
-                </StackPanel>
+            <StackPanel Margin="20,20,20,10" Orientation="Vertical">
+                <Image Source="pack://application:,,,/Images/logoOdisee.png"
+                       Width="180" Stretch="Uniform" Margin="0,0,0,10"/>
+                <TextBlock Text="Bedrijf" Foreground="White" FontWeight="Bold"/>
+                <TextBlock Text="Dashboard" Foreground="#888" FontSize="12"/>
+            </StackPanel>
 
-                <!-- Menu -->
-                <!-- Sidebar menu -->
-                <StackPanel Grid.Row="1" Margin="20,10">
-                    <Button Content="🏠 Dashboard" FontSize="18" Margin="0,5" 
-        Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Left" Click="CompanyDashboardButton_Click"/>
+            <StackPanel Grid.Row="1" Margin="20,10">
+                <Button Content="🏠 Dashboard" FontSize="18" Background="Transparent"
+                        Foreground="White" BorderThickness="0"
+                        HorizontalContentAlignment="Left" Click="CompanyDashboardButton_Click"/>
+                <Button Content="📄 Jaarrapport" FontSize="18" Background="Transparent"
+                        Foreground="White" BorderThickness="0"
+                        HorizontalContentAlignment="Left" Click="YearRepportButton_Click"/>
+                <Button Content="💰 Kosten" FontSize="18" Background="Transparent"
+                        Foreground="White" BorderThickness="0"
+                        HorizontalContentAlignment="Left" Click="CostOverviewButton_Click"/>
+                <Button Content="📊 Vergelijk kosten" FontSize="18" Background="Transparent"
+        Foreground="White" BorderThickness="0"
+        HorizontalContentAlignment="Left" Click="CompareCostsButton_Click"/>
+            </StackPanel>
 
-                    <!-- Nieuw: yearrepport-knop -->
-                    <Button Content="📄 Jaarrapport" FontSize="18" Margin="0,5"
-        Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Left"
-        Click="YearRepportButton_Click"/>
-
-                    <Button Content="💰 Kosten" FontSize="18"
-        Background="Transparent" Foreground="White"
-        BorderThickness="0" HorizontalContentAlignment="Left" Click="CostOverviewButton_Click"/>
-                </StackPanel>
-
-
-                <!-- Logout knop onderaan -->
-                <StackPanel Grid.Row="2" Margin="20,10">
-                    <Button Background="Transparent" Margin="0,5" Foreground="White" BorderThickness="0"  FontSize="18" HorizontalAlignment="Left" Content="👋 Logout "  Click="Logout_Click"/>
-                </StackPanel>
-            </Grid>
-
-            <!-- 🟨 Main content -->
-            <Grid Grid.Column="1" Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <!-- Welkomsttekst -->
-                    <RowDefinition Height="*"/>
-                    <!-- Statuslijsten -->
-                </Grid.RowDefinitions>
-
-                <!-- Welkom -->
-                <TextBlock x:Name="txtWelkom" Grid.Row="0" Text="" FontSize="24" FontWeight="Bold" Foreground="#2A2F4A" Margin="0,0,0,20"/>
-                <Label Name="lblGegevens" Margin="0,0,0,20"></Label>
-            </Grid>
+            <StackPanel Grid.Row="2" Margin="20,10">
+                <Button Content="👋 Logout" FontSize="18" Background="Transparent"
+                        Foreground="White" BorderThickness="0"
+                        HorizontalAlignment="Left" Click="Logout_Click"/>
+            </StackPanel>
         </Grid>
-    </Grid>
 
+        <!-- Main content -->
+        <ScrollViewer Grid.Column="1" Margin="20">
+            <StackPanel>
+                <TextBlock x:Name="txtWelkom"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#2A2F4A"
+                           Margin="0,0,0,20"/>
+
+                <Border Background="#F9F9F9" CornerRadius="10" Padding="20" BorderBrush="#DDD" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Bedrijfsgegevens" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+                        <TextBlock x:Name="txtGegevens" FontSize="14" Foreground="#333"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

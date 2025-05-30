@@ -11,7 +11,9 @@ namespace CLBenchmark
         public int Id { get; set; }
         public decimal Value { get; set; }
         public string CostType { get; set; }
+        public string CostTypeText { get; set; }
         public string Category { get; set; }
+        public string CategoryText { get; set; }
         public int YearreportId { get; set; }
     }
 }
