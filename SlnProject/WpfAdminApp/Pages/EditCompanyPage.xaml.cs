@@ -130,5 +130,10 @@ namespace WpfAdminApp.Pages
         {
             NavigationService?.Navigate(new LoginPage());
         }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new EditCompanyPage(company));
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace WpfCompanyApp.Pages
     {
         private Company _loggedInCompany;
         private CostRepository _repo = new CostRepository();
-
+        private int _companyId;
         public SeriesCollection ComparisonSeries { get; set; }
         public string[] Labels { get; set; }
         public Axis[] XAxes { get; set; }
@@ -36,6 +36,8 @@ namespace WpfCompanyApp.Pages
             _loggedInCompany = loggedInCompany;
             DataContext = this;
             LoadFilters();
+
+           // LaadNaceOmschrijving();
         }
 
         private void LoadFilters()
@@ -76,6 +78,9 @@ namespace WpfCompanyApp.Pages
             int vergelijkId = ((ComboBoxItem)cmbVergelijkBedrijf.SelectedItem)?.Tag as int? ?? 0;
             List<CategoryCost> andereData = _repo.GetCategoryCosts(vergelijkId, year, type);
 
+            string omschrijving = NacecodeRepository.HaalNaceOmschrijvingVoorBedrijf(vergelijkId);
+            txtNaceOmschrijving.Text = "NACE-sector: " + omschrijving;
+
             var labels = mijnData.Select(c => c.Category).ToArray();
             var mijnValues = mijnData.Select(c => c.Total).ToArray();
             var andereValues = labels
@@ -85,7 +90,7 @@ namespace WpfCompanyApp.Pages
             ComparisonSeries = new SeriesCollection
     {
         new ColumnSeries { Title = "Jij", Values = new ChartValues<decimal>(mijnValues) },
-        new ColumnSeries { Title = "Vergelijk", Values = new ChartValues<decimal>(andereValues) }
+        new ColumnSeries { Title = "Gekozen bedrijf", Values = new ChartValues<decimal>(andereValues) }
     };
 
             Labels = labels;
@@ -126,6 +131,11 @@ namespace WpfCompanyApp.Pages
         {
             NavigationService?.Navigate(new CostComparisonPage(_loggedInCompany));
         }
+        //private void LaadNaceOmschrijving()
+        //{
+        //    string omschrijving = NacecodeRepository.HaalNaceOmschrijvingVoorBedrijf(_companyId);
+        //    txtNaceOmschrijving.Text = "NACE-sector: " + omschrijving;
+        //}
     }
 }
 
